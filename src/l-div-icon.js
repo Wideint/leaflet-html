@@ -18,7 +18,11 @@ export default class CustomElement extends HTMLElement {
     }
     const iconAnchor = this.getAttribute("icon-anchor");
     if (iconAnchor !== null) {
-      options["iconAnchor"] = iconAnchor;
+      options["iconAnchor"] = JSON.parse(iconAnchor);
+    }
+    const iconSize = this.getAttribute("icon-size");
+    if (iconSize != null) {
+      options["iconSize"] = JSON.parse(iconSize);
     }
 
     this.icon = divIcon(options);
