@@ -1,5 +1,6 @@
 // @ts-check
 import { Circle, LatLng, Polygon, Polyline, Rectangle } from "leaflet";
+import { Annulus } from "leaflet.annulus/src/L.Annulus.js";
 import { camelToKebab } from "./util.js";
 import { htmlAttribute, parse } from "./parse.js";
 import { layerConnected, tooltipConnected } from "./events.js";
@@ -12,7 +13,7 @@ import { layerConnected, tooltipConnected } from "./events.js";
  * @property {AttributeValue | null} defaultValue
  */
 /**
- * @typedef {("circle"|"rectangle"|"polygon"|"polyline")} MethodName
+ * @typedef {("circle"|"rectangle"|"polygon"|"polyline"|"annulus")} MethodName
  * @typedef {("path"|"interactiveLayer")} LayerName
  * @typedef {("boolean"|"number"|"string"|"latlng"|"latlngbounds")} AttributeType
  * @typedef {(boolean|number|string|LatLng)} AttributeValue
@@ -24,6 +25,8 @@ import { layerConnected, tooltipConnected } from "./events.js";
  */
 const positionalArguments = (methodName) => {
   switch (methodName) {
+    case "annulus":
+      return [option("latLng", "latlng", null)];
     case "circle":
       return [option("latLng", "latlng", null)];
     case "rectangle":
@@ -76,6 +79,7 @@ const inferParser = (type) => {
  */
 const options = (methodName) => {
   const _OPTIONS = {
+    annulus: [option("innerRadius", "number", null)],
     circle: [option("radius", "number", null)],
     path: [
       option("stroke", "boolean", true),
@@ -105,6 +109,7 @@ const options = (methodName) => {
  * @type {Object.<string, (MethodName | LayerName)[]>}
  */
 const INHERITS = {
+  annulus: ["circle"],
   circle: ["path"],
   polyline: ["path"],
   polygon: ["polyline"],
@@ -148,7 +153,19 @@ const setter = (layer, methodName, name, newValue) => {
   const parsedValue = _opt.parser(newValue);
 
   // Update
-  if (layer instanceof Circle) {
+  if (layer instanceof Annulus) {
+    switch (name) {
+      case "lat-lng":
+        layer.setLatLng(JSON.parse(newValue));
+        break;
+      case "radius":
+        layer.setRadius(parseFloat(newValue));
+        break;
+      case "inner-radius":
+        layer.setInnerRadius(parseFloat(newValue));
+        break;
+    }
+  } else if (layer instanceof Circle) {
     switch (name) {
       case "lat-lng":
         layer.setLatLng(JSON.parse(newValue));
