@@ -286,7 +286,8 @@ const generator = (method, methodName) => {
 
     connectedCallback() {
       const args = positional(this, methodName);
-      const options = settings(this, methodName);
+      let options = settings(this, methodName);
+      options.stroke = false;
       this.layer = method(...args, options);
       const event = new CustomEvent(layerConnected, {
         cancelable: true,
