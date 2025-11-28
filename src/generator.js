@@ -1,6 +1,7 @@
 // @ts-check
 import { Circle, LatLng, Polygon, Polyline, Rectangle } from "leaflet";
 import { Annulus } from "leaflet.annulus/src/L.Annulus.js";
+import { DiskSector } from "leaflet.disksector/DiskSector.js";
 import { camelToKebab } from "./util.js";
 import { htmlAttribute, parse } from "./parse.js";
 import { layerConnected, tooltipConnected } from "./events.js";
@@ -13,7 +14,7 @@ import { layerConnected, tooltipConnected } from "./events.js";
  * @property {AttributeValue | null} defaultValue
  */
 /**
- * @typedef {("circle"|"rectangle"|"polygon"|"polyline"|"annulus")} MethodName
+ * @typedef {("circle"|"rectangle"|"polygon"|"polyline"|"annulus"|"disksector")} MethodName
  * @typedef {("path"|"interactiveLayer")} LayerName
  * @typedef {("boolean"|"number"|"string"|"latlng"|"latlngbounds")} AttributeType
  * @typedef {(boolean|number|string|LatLng)} AttributeValue
@@ -25,6 +26,8 @@ import { layerConnected, tooltipConnected } from "./events.js";
  */
 const positionalArguments = (methodName) => {
   switch (methodName) {
+    case "disksector":
+      return [option("latLng", "latlng", null)];
     case "annulus":
       return [option("latLng", "latlng", null)];
     case "circle":
@@ -79,6 +82,10 @@ const inferParser = (type) => {
  */
 const options = (methodName) => {
   const _OPTIONS = {
+    disksector: [
+      option("startAngle", "number", null),
+      option("stopAngle", "number", null)
+    ],
     annulus: [option("innerRadius", "number", null)],
     circle: [option("radius", "number", null)],
     path: [
@@ -109,6 +116,7 @@ const options = (methodName) => {
  * @type {Object.<string, (MethodName | LayerName)[]>}
  */
 const INHERITS = {
+  disksector: ["circle"],
   annulus: ["circle"],
   circle: ["path"],
   polyline: ["path"],
@@ -153,7 +161,22 @@ const setter = (layer, methodName, name, newValue) => {
   const parsedValue = _opt.parser(newValue);
 
   // Update
-  if (layer instanceof Annulus) {
+  if (layer instanceof DiskSector) {
+    switch (name) {
+      case "lat-lng":
+        layer.setLatLng(JSON.parse(newValue));
+        break;
+      case "radius":
+        layer.setRadius(parseFloat(newValue));
+        break;
+      case "start-angle":
+        layer.setStartAngle(parseFloat(newValue));
+        break;
+      case "stop-angle":
+        layer.setStopAngle(parseFloat(newValue));
+        break;
+    }
+  } else if (layer instanceof Annulus) {
     switch (name) {
       case "lat-lng":
         layer.setLatLng(JSON.parse(newValue));

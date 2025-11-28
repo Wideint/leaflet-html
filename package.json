@@ -52,6 +52,7 @@
   "dependencies": {
     "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3",
-    "leaflet.annulus": "Wideint/L.Annulus"
+    "leaflet.annulus": "wideint/leaflet-annulus",
+    "leaflet.disksector": "wideint/leaflet-disksector"
   }
 }
