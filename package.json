@@ -42,11 +42,11 @@
     "@storybook/web-components": "^8.3.6",
     "@storybook/web-components-vite": "^8.3.6",
     "@vitest/coverage-v8": "^1.6.0",
-    "happy-dom": "^15.11.4",
+    "happy-dom": "20.8.9",
     "lit": "^3.2.1",
     "prettier": "3.2.5",
     "storybook": "^8.3.6",
-    "vite": "^5.4.21",
+    "vite": "8.0.5",
     "vitest": "^1.6.0"
   },
   "dependencies": {
