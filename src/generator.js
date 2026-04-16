@@ -1,8 +1,8 @@
 // @ts-check
 import { Circle, LatLng, Polygon, Polyline, Rectangle, stamp } from "leaflet";
-import { Annulus } from "leaflet.annulus/src/L.Annulus.js";
-import { DiskSector } from "leaflet.disksector/DiskSector.js";
-import { ArrowHead } from "leaflet.arrowhead/ArrowHead.js";
+import { Annulus } from "leaflet.annulus";
+import { DiskSector } from "leaflet.disksector";
+import { ArrowHead } from "leaflet.arrowhead";
 import { camelToKebab } from "./util.js";
 import { htmlAttribute, parse } from "./parse.js";
 import { layerConnected, tooltipConnected } from "./events.js";

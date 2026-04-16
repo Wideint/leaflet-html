@@ -18,9 +18,9 @@ import LTooltip from "./l-tooltip.js";
 import LPane from "./l-pane.js";
 import generator from "./generator.js";
 import { circle, polyline, polygon, rectangle } from "leaflet";
-import { annulus } from "leaflet.annulus/src/L.Annulus.js";
-import { disksector } from "leaflet.disksector/DiskSector.js";
-import { arrowhead } from "leaflet.arrowhead/ArrowHead.js";
+import { annulus } from "leaflet.annulus";
+import { disksector } from "leaflet.disksector";
+import { arrowhead } from "leaflet.arrowhead";
 
 import LMarkerClusterGroup from "./l-marker-cluster-group.js";
 
