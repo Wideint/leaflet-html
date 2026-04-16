@@ -33,13 +33,13 @@ class LLayerGroup extends LLayer {
       mutations.forEach((mutation) => {
         mutation.removedNodes.forEach((node) => {
           if (node instanceof HTMLElement) {
-            const leafletId = node.getAttribute("leaflet-id");
-            if (leafletId !== null) {
+            node.querySelectorAll("[leaflet-id]").forEach((child) => {
+              const leafletId = child.getAttribute("leaflet-id");
               const layer = group.getLayer(parseInt(leafletId));
               if (typeof layer !== "undefined") {
                 group.removeLayer(layer);
               }
-            }
+            });
           }
         });
       });
