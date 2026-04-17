@@ -23,6 +23,7 @@ import { disksector } from "leaflet.disksector";
 import { arrowhead } from "leaflet.arrowhead";
 
 import LMarkerClusterGroup from "./l-marker-cluster-group.js";
+import LHeatLayer from "./l-heat-layer.js";
 
 const init = (() => {
   // Custom elements (order of definition is important)
@@ -49,6 +50,7 @@ const init = (() => {
   customElements.define("l-annulus", generator(annulus, "annulus"));
   customElements.define("l-disk-sector", generator(disksector, "disksector"));
   customElements.define("l-arrowhead", generator(arrowhead, "arrowhead"));
+  customElements.define("l-heat-layer", LHeatLayer);
   customElements.define("l-tooltip", LTooltip);
   customElements.define("l-div-icon", LDivIcon);
 })();
