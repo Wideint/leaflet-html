@@ -18,9 +18,9 @@ import LTooltip from "./l-tooltip.js";
 import LPane from "./l-pane.js";
 import generator from "./generator.js";
 import { circle, polyline, polygon, rectangle } from "leaflet";
-import { annulus } from "leaflet.annulus";
-import { disksector } from "leaflet.disksector";
 import { arrowhead } from "leaflet.arrowhead";
+import { annulus, annulussector, disksector } from "./annulus-sector.js";
+
 
 import LMarkerClusterGroup from "./l-marker-cluster-group.js";
 import LHeatLayer from "./l-heat-layer.js";
@@ -49,6 +49,7 @@ const init = (() => {
   customElements.define("l-rectangle", generator(rectangle, "rectangle"));
   customElements.define("l-annulus", generator(annulus, "annulus"));
   customElements.define("l-disk-sector", generator(disksector, "disksector"));
+  customElements.define("l-annulus-sector", generator(annulussector, "annulussector"),);
   customElements.define("l-arrowhead", generator(arrowhead, "arrowhead"));
   customElements.define("l-heat-layer", LHeatLayer);
   customElements.define("l-tooltip", LTooltip);
