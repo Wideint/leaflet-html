@@ -323,9 +323,6 @@ const generator = (method, methodName) => {
     connectedCallback() {
       const args = positional(this, methodName);
       let options = settings(this, methodName);
-      if (methodName !== "arrowhead") {
-        options.stroke = false;
-      }
       this.layer = method(...args, options);
       this.setAttribute("leaflet-id", stamp(this.layer));
       const event = new CustomEvent(layerConnected, {

@@ -111,6 +111,7 @@ const annularMixin = () => ({
 
 export var AnnulusSector = (L.AnnulusSector = Circle.extend({
   options: {
+    stroke: false,
     startAngle: 0,
     stopAngle: 359.9999,
     innerRadius: 0,
@@ -131,6 +132,7 @@ export var AnnulusSector = (L.AnnulusSector = Circle.extend({
 
 export var Annulus = (L.Annulus = Circle.extend({
   options: {
+    stroke: false,
     innerRadius: 0,
   },
 
@@ -147,6 +149,7 @@ export var Annulus = (L.Annulus = Circle.extend({
 
 export var DiskSector = (L.DiskSector = Circle.extend({
   options: {
+    stroke: false,
     startAngle: 0,
     stopAngle: 359.9999,
   },
