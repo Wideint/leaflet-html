@@ -1,7 +1,12 @@
 // @ts-check
 import { Circle, LatLng, Polygon, Polyline, Rectangle, stamp } from "leaflet";
 import { ArrowHead } from "leaflet.arrowhead";
-import { Annulus, AnnulusSector, Disk, DiskSector } from "./annulus-sector.js";
+import {
+  Annulus,
+  AnnulusSector,
+  Disk,
+  DiskSector,
+} from "leaflet.circularshapes";
 import { camelToKebab } from "./util.js";
 import { htmlAttribute, parse } from "./parse.js";
 import { layerConnected, tooltipConnected } from "./events.js";
@@ -300,11 +305,11 @@ const settings = (el, methodName) => {
  * @param {MethodName} methodName
  */
 const positional = (el, methodName) => {
-  return positionalArguments(methodName).map(option => {
-    const schema = htmlAttribute(option.kebab)
-    const value = parse(schema, el)
+  return positionalArguments(methodName).map((option) => {
+    const schema = htmlAttribute(option.kebab);
+    const value = parse(schema, el);
     return option.parser(value);
-  })
+  });
 };
 
 /**
