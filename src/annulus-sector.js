@@ -165,6 +165,16 @@ export var DiskSector = (L.DiskSector = Circle.extend({
   },
 }));
 
+export var Disk = (L.Disk = Circle.extend({
+  options: {
+    stroke: false,
+  },
+
+  initialize(latlng, options, legacyOptions) {
+    L.Circle.prototype.initialize.call(this, latlng, options, legacyOptions);
+  },
+}));
+
 L.annulussector = function (latlng, options) {
   return new L.AnnulusSector(latlng, options);
 };
@@ -177,6 +187,10 @@ L.disksector = function (latlng, options) {
   return new L.DiskSector(latlng, options);
 };
 
+L.disk = function (latlng, options) {
+  return new L.Disk(latlng, options);
+};
+
 export function annulussector(latlng, options) {
   return new AnnulusSector(latlng, options);
 }
@@ -187,6 +201,10 @@ export function annulus(latlng, options) {
 
 export function disksector(latlng, options) {
   return new DiskSector(latlng, options);
+}
+
+export function disk(latlng, options) {
+  return new Disk(latlng, options);
 }
 
 L.SVG.include({
