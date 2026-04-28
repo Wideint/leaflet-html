@@ -1,8 +1,12 @@
 // @ts-check
 import { Circle, LatLng, Polygon, Polyline, Rectangle, stamp } from "leaflet";
-import { Annulus } from "leaflet.annulus";
-import { DiskSector } from "leaflet.disksector";
 import { ArrowHead } from "leaflet.arrowhead";
+import {
+  Annulus,
+  AnnulusSector,
+  Disk,
+  DiskSector,
+} from "leaflet.circularshapes";
 import { camelToKebab } from "./util.js";
 import { htmlAttribute, parse } from "./parse.js";
 import { layerConnected, tooltipConnected } from "./events.js";
@@ -29,6 +33,10 @@ const positionalArguments = (methodName) => {
   switch (methodName) {
     case "arrowhead":
       return [option("latLngs", "latlng", null)];
+    case "annulussector":
+      return [option("latLng", "latlng", null)];
+    case "disk":
+      return [option("latLng", "latlng", null)];
     case "disksector":
       return [option("latLng", "latlng", null)];
     case "annulus":
@@ -86,9 +94,15 @@ const inferParser = (type) => {
 const options = (methodName) => {
   const _OPTIONS = {
     arrowhead: [],
+    annulussector: [
+      option("innerRadius", "number", null),
+      option("startAngle", "number", null),
+      option("stopAngle", "number", null),
+    ],
+    disk: [option("radius", "number", null)],
     disksector: [
       option("startAngle", "number", null),
-      option("stopAngle", "number", null)
+      option("stopAngle", "number", null),
     ],
     annulus: [option("innerRadius", "number", null)],
     circle: [option("radius", "number", null)],
@@ -121,6 +135,8 @@ const options = (methodName) => {
  */
 const INHERITS = {
   arrowhead: ["polyline"],
+  annulussector: ["annulus", "disksector"],
+  disk: ["circle"],
   disksector: ["circle"],
   annulus: ["circle"],
   circle: ["path"],
@@ -172,6 +188,24 @@ const setter = (layer, methodName, name, newValue) => {
         layer.setLatLngs(JSON.parse(newValue));
         break;
     }
+  } else if (layer instanceof AnnulusSector) {
+    switch (name) {
+      case "lat-lng":
+        layer.setLatLng(JSON.parse(newValue));
+        break;
+      case "radius":
+        layer.setRadius(parseFloat(newValue));
+        break;
+      case "inner-radius":
+        layer.setInnerRadius(parseFloat(newValue));
+        break;
+      case "start-angle":
+        layer.setStartAngle(parseFloat(newValue));
+        break;
+      case "stop-angle":
+        layer.setStopAngle(parseFloat(newValue));
+        break;
+    }
   } else if (layer instanceof DiskSector) {
     switch (name) {
       case "lat-lng":
@@ -199,7 +233,7 @@ const setter = (layer, methodName, name, newValue) => {
         layer.setInnerRadius(parseFloat(newValue));
         break;
     }
-  } else if (layer instanceof Circle) {
+  } else if (layer instanceof Circle || layer instanceof Disk) {
     switch (name) {
       case "lat-lng":
         layer.setLatLng(JSON.parse(newValue));
@@ -271,11 +305,11 @@ const settings = (el, methodName) => {
  * @param {MethodName} methodName
  */
 const positional = (el, methodName) => {
-  return positionalArguments(methodName).map(option => {
-    const schema = htmlAttribute(option.kebab)
-    const value = parse(schema, el)
+  return positionalArguments(methodName).map((option) => {
+    const schema = htmlAttribute(option.kebab);
+    const value = parse(schema, el);
     return option.parser(value);
-  })
+  });
 };
 
 /**
@@ -298,9 +332,6 @@ const generator = (method, methodName) => {
     connectedCallback() {
       const args = positional(this, methodName);
       let options = settings(this, methodName);
-      if (methodName !== "arrowhead") {
-        options.stroke = false;
-      }
       this.layer = method(...args, options);
       this.setAttribute("leaflet-id", stamp(this.layer));
       const event = new CustomEvent(layerConnected, {
