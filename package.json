@@ -54,6 +54,6 @@
     "leaflet.markercluster": "^1.5.3",
     "leaflet.arrowhead": "wideint/leaflet-arrowheads",
     "leaflet.heatmap": "wideint/leaflet-heatmap",
-    "leaflet.circularshapes": "Wideint/leaflet-circular-shapes"
+    "leaflet.circularshapes": "Wideint/leaflet-circular-shapes#1.1.0"
   }
 }
