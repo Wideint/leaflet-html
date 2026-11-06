@@ -69,14 +69,14 @@
         </l-base-layers>
         <l-overlay-layers>
           <l-layer-group name="Cities">
-            <l-arrowhead lat-lngs="[[39.61, -105.02], [39.74, -104.99]]"
-                         fill="true" yarn="30">
-              <l-popup content="This is an arrowhead"></l-popup>
-            </l-arrowhead>
-            <l-arrowhead lat-lngs="[[39.74, -104.99], [39.73, -104.8]]"
-                         fill="true" color="black">
-              <l-popup content="This is another arrowhead"></l-popup>
-            </l-arrowhead>
+            <l-arrow lat-lngs="[[39.61, -105.02], [39.74, -104.99]]"
+                     yawn="90">
+              <l-popup content="This is an arrow"></l-popup>
+            </l-arrow>
+            <l-arrow lat-lngs="[[39.74, -104.99], [39.73, -104.8]]"
+                     head-fill="true" color="black">
+              <l-popup content="This is another arrow"></l-popup>
+            </l-arrow>
             <l-disk lat-lng="[39.61, -105.02]" radius="8000">
               <l-popup content="This is Littleton, CO."></l-popup>
             </l-disk>
@@ -106,8 +106,8 @@
     <script type="module">
       // Manual tests
       document.getElementById("btn-remove").addEventListener("click", () => {
-        document.querySelector('l-arrowhead').remove();
-        document.querySelector('l-arrowhead').remove();
+        document.querySelector('l-arrow').remove();
+        document.querySelector('l-arrow').remove();
         document.querySelector('l-disk').remove();
         document.querySelector('l-annulus').remove();
         document.querySelector('l-disk').remove();

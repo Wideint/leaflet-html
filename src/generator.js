@@ -1,6 +1,6 @@
 // @ts-check
 import { Circle, LatLng, Polygon, Polyline, Rectangle, stamp } from "leaflet";
-import { ArrowHead } from "leaflet.arrowhead";
+import { Arrow } from "leaflet.arrowhead";
 import {
   Annulus,
   AnnulusSector,
@@ -19,7 +19,7 @@ import { layerConnected, tooltipConnected } from "./events.js";
  * @property {AttributeValue | null} defaultValue
  */
 /**
- * @typedef {("circle"|"rectangle"|"polygon"|"polyline"|"annulus"|"disksector"|"arrowhead")} MethodName
+ * @typedef {("circle"|"rectangle"|"polygon"|"polyline"|"annulus"|"disksector"|"annulussector"|"disk"|"arrow")} MethodName
  * @typedef {("path"|"interactiveLayer")} LayerName
  * @typedef {("boolean"|"number"|"string"|"latlng"|"latlngbounds")} AttributeType
  * @typedef {(boolean|number|string|LatLng)} AttributeValue
@@ -31,7 +31,7 @@ import { layerConnected, tooltipConnected } from "./events.js";
  */
 const positionalArguments = (methodName) => {
   switch (methodName) {
-    case "arrowhead":
+    case "arrow":
       return [option("latLngs", "latlng", null)];
     case "annulussector":
       return [option("latLng", "latlng", null)];
@@ -93,7 +93,7 @@ const inferParser = (type) => {
  */
 const options = (methodName) => {
   const _OPTIONS = {
-    arrowhead: [],
+    arrow: [option("headFill", "boolean", false), option("yawn", "number", 40)],
     annulussector: [
       option("innerRadius", "number", null),
       option("startAngle", "number", null),
@@ -134,7 +134,7 @@ const options = (methodName) => {
  * @type {Object.<string, (MethodName | LayerName)[]>}
  */
 const INHERITS = {
-  arrowhead: ["polyline"],
+  arrow: ["polyline"],
   annulussector: ["annulus", "disksector"],
   disk: ["circle"],
   disksector: ["circle"],
@@ -182,7 +182,7 @@ const setter = (layer, methodName, name, newValue) => {
   const parsedValue = _opt.parser(newValue);
 
   // Update
-  if (layer instanceof ArrowHead) {
+  if (layer instanceof Arrow) {
     switch (name) {
       case "lat-lngs":
         layer.setLatLngs(JSON.parse(newValue));

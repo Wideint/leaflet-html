@@ -18,7 +18,7 @@ import LTooltip from "./l-tooltip.js";
 import LPane from "./l-pane.js";
 import generator from "./generator.js";
 import { circle, polyline, polygon, rectangle } from "leaflet";
-import { arrowhead } from "leaflet.arrowhead";
+import { arrow } from "leaflet.arrowhead";
 import {
   annulus,
   annulussector,
@@ -58,7 +58,7 @@ const init = (() => {
     "l-annulus-sector",
     generator(annulussector, "annulussector"),
   );
-  customElements.define("l-arrowhead", generator(arrowhead, "arrowhead"));
+  customElements.define("l-arrow", generator(arrow, "arrow"));
   customElements.define("l-heat-layer", LHeatLayer);
   customElements.define("l-tooltip", LTooltip);
   customElements.define("l-div-icon", LDivIcon);

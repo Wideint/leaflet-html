@@ -52,7 +52,7 @@
   "dependencies": {
     "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3",
-    "leaflet.arrowhead": "wideint/leaflet-arrowheads",
+    "leaflet.arrowhead": "wideint/leaflet-arrowheads#1.1.1",
     "leaflet.heatmap": "wideint/leaflet-heatmap",
     "leaflet.circularshapes": "Wideint/leaflet-circular-shapes#1.1.0"
   }
