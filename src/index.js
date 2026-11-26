@@ -18,6 +18,7 @@ import LTooltip from "./l-tooltip.js";
 import LPane from "./l-pane.js";
 import generator from "./generator.js";
 import { circle, polyline, polygon, rectangle } from "leaflet";
+import { arrow } from "leaflet.arrowhead";
 import LMarkerClusterGroup from "./l-marker-cluster-group.js";
 
 const init = (() => {
@@ -42,6 +43,7 @@ const init = (() => {
   customElements.define("l-polyline", generator(polyline, "polyline"));
   customElements.define("l-polygon", generator(polygon, "polygon"));
   customElements.define("l-rectangle", generator(rectangle, "rectangle"));
+  customElements.define("l-arrow", generator(arrow, "arrow"));
   customElements.define("l-tooltip", LTooltip);
   customElements.define("l-div-icon", LDivIcon);
 })();
