@@ -19,6 +19,12 @@ import LPane from "./l-pane.js";
 import generator from "./generator.js";
 import { circle, polyline, polygon, rectangle } from "leaflet";
 import { arrow } from "leaflet.arrowhead";
+import {
+  annulus,
+  annulussector,
+  disk,
+  disksector,
+} from "leaflet.circularshapes";
 import LMarkerClusterGroup from "./l-marker-cluster-group.js";
 
 const init = (() => {
@@ -43,6 +49,13 @@ const init = (() => {
   customElements.define("l-polyline", generator(polyline, "polyline"));
   customElements.define("l-polygon", generator(polygon, "polygon"));
   customElements.define("l-rectangle", generator(rectangle, "rectangle"));
+  customElements.define("l-annulus", generator(annulus, "annulus"));
+  customElements.define("l-disk", generator(disk, "disk"));
+  customElements.define("l-disk-sector", generator(disksector, "disksector"));
+  customElements.define(
+    "l-annulus-sector",
+    generator(annulussector, "annulussector"),
+  );
   customElements.define("l-arrow", generator(arrow, "arrow"));
   customElements.define("l-tooltip", LTooltip);
   customElements.define("l-div-icon", LDivIcon);

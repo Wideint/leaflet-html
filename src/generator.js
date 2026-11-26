@@ -1,6 +1,12 @@
 // @ts-check
 import { Circle, LatLng, Polygon, Polyline, Rectangle, stamp } from "leaflet";
 import { Arrow } from "leaflet.arrowhead";
+import {
+  Annulus,
+  AnnulusSector,
+  Disk,
+  DiskSector,
+} from "leaflet.circularshapes";
 import { camelToKebab } from "./util.js";
 import { htmlAttribute, parse } from "./parse.js";
 import { layerConnected, tooltipConnected } from "./events.js";
@@ -13,7 +19,7 @@ import { layerConnected, tooltipConnected } from "./events.js";
  * @property {AttributeValue | null} defaultValue
  */
 /**
- * @typedef {("circle"|"rectangle"|"polygon"|"polyline"|"arrow"))} MethodName
+ * @typedef {("circle"|"rectangle"|"polygon"|"polyline"|"annulus"|"disksector"|"annulussector"|"disk"|"arrow")} MethodName
  * @typedef {("path"|"interactiveLayer")} LayerName
  * @typedef {("boolean"|"number"|"string"|"latlng"|"latlngbounds")} AttributeType
  * @typedef {(boolean|number|string|LatLng)} AttributeValue
@@ -27,6 +33,14 @@ const positionalArguments = (methodName) => {
   switch (methodName) {
     case "arrow":
       return [option("latLngs", "latlng", null)];
+    case "annulussector":
+      return [option("latLng", "latlng", null)];
+    case "disk":
+      return [option("latLng", "latlng", null)];
+    case "disksector":
+      return [option("latLng", "latlng", null)];
+    case "annulus":
+      return [option("latLng", "latlng", null)];
     case "circle":
       return [option("latLng", "latlng", null)];
     case "rectangle":
@@ -80,6 +94,17 @@ const inferParser = (type) => {
 const options = (methodName) => {
   const _OPTIONS = {
     arrow: [option("headFill", "boolean", false), option("yawn", "number", 40)],
+    annulussector: [
+      option("innerRadius", "number", null),
+      option("startAngle", "number", null),
+      option("stopAngle", "number", null),
+    ],
+    disk: [option("radius", "number", null)],
+    disksector: [
+      option("startAngle", "number", null),
+      option("stopAngle", "number", null),
+    ],
+    annulus: [option("innerRadius", "number", null)],
     circle: [option("radius", "number", null)],
     path: [
       option("stroke", "boolean", true),
@@ -110,6 +135,10 @@ const options = (methodName) => {
  */
 const INHERITS = {
   arrow: ["polyline"],
+  annulussector: ["annulus", "disksector"],
+  disk: ["circle"],
+  disksector: ["circle"],
+  annulus: ["circle"],
   circle: ["path"],
   polyline: ["path"],
   polygon: ["polyline"],
@@ -159,7 +188,52 @@ const setter = (layer, methodName, name, newValue) => {
         layer.setLatLngs(JSON.parse(newValue));
         break;
     }
-  } else if (layer instanceof Circle) {
+  } else if (layer instanceof AnnulusSector) {
+    switch (name) {
+      case "lat-lng":
+        layer.setLatLng(JSON.parse(newValue));
+        break;
+      case "radius":
+        layer.setRadius(parseFloat(newValue));
+        break;
+      case "inner-radius":
+        layer.setInnerRadius(parseFloat(newValue));
+        break;
+      case "start-angle":
+        layer.setStartAngle(parseFloat(newValue));
+        break;
+      case "stop-angle":
+        layer.setStopAngle(parseFloat(newValue));
+        break;
+    }
+  } else if (layer instanceof DiskSector) {
+    switch (name) {
+      case "lat-lng":
+        layer.setLatLng(JSON.parse(newValue));
+        break;
+      case "radius":
+        layer.setRadius(parseFloat(newValue));
+        break;
+      case "start-angle":
+        layer.setStartAngle(parseFloat(newValue));
+        break;
+      case "stop-angle":
+        layer.setStopAngle(parseFloat(newValue));
+        break;
+    }
+  } else if (layer instanceof Annulus) {
+    switch (name) {
+      case "lat-lng":
+        layer.setLatLng(JSON.parse(newValue));
+        break;
+      case "radius":
+        layer.setRadius(parseFloat(newValue));
+        break;
+      case "inner-radius":
+        layer.setInnerRadius(parseFloat(newValue));
+        break;
+    }
+  } else if (layer instanceof Circle || layer instanceof Disk) {
     switch (name) {
       case "lat-lng":
         layer.setLatLng(JSON.parse(newValue));
