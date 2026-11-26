@@ -26,6 +26,7 @@ import {
   disksector,
 } from "leaflet.circularshapes";
 import LMarkerClusterGroup from "./l-marker-cluster-group.js";
+import LHeatLayer from "./l-heat-layer.js";
 
 const init = (() => {
   // Custom elements (order of definition is important)
@@ -57,6 +58,7 @@ const init = (() => {
     generator(annulussector, "annulussector"),
   );
   customElements.define("l-arrow", generator(arrow, "arrow"));
+  customElements.define("l-heat-layer", LHeatLayer);
   customElements.define("l-tooltip", LTooltip);
   customElements.define("l-div-icon", LDivIcon);
 })();
